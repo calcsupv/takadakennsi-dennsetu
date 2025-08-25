@@ -6,7 +6,7 @@
 </head>
 <body>
   <div id="output"></div>
-  <button onclick="input()">もう一回</button>
+  <button onclick="showRandom()">もう一回</button>
 
   <script>
     let dataList = [];
@@ -15,9 +15,10 @@
       try {
         const response = await fetch("data/data.json");
         const json = await response.json();
+
         if (json.date && Array.isArray(json.date)) {
           dataList = json.date;
-          input();
+          showRandom();
         } else {
           document.getElementById("output").textContent = "データが見つかりません";
         }
@@ -26,7 +27,7 @@
       }
     }
 
-    function input() {
+    function showRandom() {
       if (dataList.length > 0) {
         const randomIndex = Math.floor(Math.random() * dataList.length);
         document.getElementById("output").textContent = dataList[randomIndex];
