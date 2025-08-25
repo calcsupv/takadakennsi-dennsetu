@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>高田健志伝説</title>
+</head>
+<body>
+  <div id="output"></div>
+  <button onclick="input()">もう一回</button>
+
+  <script>
+    let dataList = [];
+
+    async function load() {
+      try {
+        const response = await fetch("data/data.json");
+        const json = await response.json();
+        if (json.date && Array.isArray(json.date)) {
+          dataList = json.date;
+          input();
+        } else {
+          document.getElementById("output").textContent = "データが見つかりません";
+        }
+      } catch (e) {
+        document.getElementById("output").textContent = "読み込みエラー: " + e;
+      }
+    }
+
+    function input() {
+      if (dataList.length > 0) {
+        const randomIndex = Math.floor(Math.random() * dataList.length);
+        document.getElementById("output").textContent = dataList[randomIndex];
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>
